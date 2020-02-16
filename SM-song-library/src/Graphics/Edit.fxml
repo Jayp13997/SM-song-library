@@ -1,8 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<<?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphics.AddController">
+   <children>
+      <Label layoutX="10.0" layoutY="25.0" text="Song" />
+      <Label layoutX="10.0" layoutY="75.0" text="Artist" />
+      <Label layoutX="10.0" layoutY="125.0" text="Year" />
+      <Label layoutX="10.0" layoutY="175.0" text="Album" />
+      <TextField fx:id="Song" layoutX="50.0" layoutY="21.0" prefWidth="275.0" />
+      <TextField fx:id="Artist" layoutX="50.0" layoutY="71.0" prefWidth="275.0" />
+      <TextField fx:id="Year" layoutX="50.0" layoutY="121.0" prefWidth="275.0" />
+      <TextField fx:id="Album" layoutX="50.0" layoutY="171.0" prefWidth="275.0" />
+   </children>
 </AnchorPane>
-

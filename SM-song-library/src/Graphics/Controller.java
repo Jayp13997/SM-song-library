@@ -22,5 +22,8 @@ public class Controller {
 
     @FXML
     private Button Delete;
+    
+    @FXML
+    private Label Error;
 
 }
