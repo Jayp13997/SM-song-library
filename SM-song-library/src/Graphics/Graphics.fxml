@@ -4,11 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphics.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphics.Controller">
    <children>
-      <SplitPane dividerPositions="0.65" layoutX="40.0" layoutY="36.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.45" layoutX="40.0" layoutY="36.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -17,7 +18,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <SplitPane dividerPositions="0.7" orientation="VERTICAL" prefHeight="246.4" prefWidth="398.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.3" orientation="VERTICAL" prefHeight="246.4" prefWidth="398.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
@@ -26,9 +27,29 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Button fx:id="Add" layoutX="15.0" layoutY="9.0" mnemonicParsing="false" text="Add" />
-                              <Button fx:id="Delete" layoutX="280.0" layoutY="9.0" mnemonicParsing="false" text="Delete" />
-                              <Button fx:id="Edit" layoutX="150.0" layoutY="9.0" mnemonicParsing="false" text="Edit" />
+                              <SplitPane dividerPositions="0.8" orientation="VERTICAL" prefHeight="224.8" prefWidth="347.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                  <AnchorPane fx:id="hide_show" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                       <children>
+                                          <Label layoutX="15.0" layoutY="10.0" text="Song" />
+                                          <Label layoutX="15.0" layoutY="50.0" text="Artist" />
+                                          <Label layoutX="15.0" layoutY="90.0" text="Year" />
+                                          <Label layoutX="15.0" layoutY="130.0" text="Album" />
+                                          <TextField fx:id="Song" layoutX="107.0" layoutY="6.0" />
+                                          <TextField fx:id="Artist" layoutX="107.0" layoutY="46.0" />
+                                          <TextField fx:id="Year" layoutX="107.0" layoutY="86.0" />
+                                          <TextField fx:id="Album" layoutX="107.0" layoutY="126.0" />
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                       <children>
+                                          <Button fx:id="Add" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" text="Add" />
+                                          <Button fx:id="Delete" layoutX="281.0" layoutY="9.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" text="Delete" />
+                                          <Button fx:id="Edit" layoutX="154.0" layoutY="10.0" mnemonicParsing="false" text="Edit" />
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
                            </children>
                         </AnchorPane>
                     </items>
