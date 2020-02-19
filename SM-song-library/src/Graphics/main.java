@@ -22,7 +22,7 @@ public class main extends Application {
 			listController.start(primaryStage);
 
 	        primaryStage.setTitle("Song Library");
-	        primaryStage.setScene(new Scene(root, 350, 400));
+	        primaryStage.setScene(new Scene(root, 700, 300));
 	        primaryStage.show();
 	    }
 

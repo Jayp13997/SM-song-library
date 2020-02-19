@@ -25,26 +25,41 @@ import javafx.stage.Stage;
 //song error before confirmation or after?
 public class Controller {
 
-    @FXML
-    private ListView<String> songlist;
-    @FXML
-    private Label details;
-    @FXML
-    private AnchorPane hide_show;
-    @FXML
-    private TextField Song;
-    @FXML
-    private TextField Artist;
-    @FXML
-    private TextField Year;
-    @FXML
-    private TextField Album;
-    @FXML
-    private Button Add;
-    @FXML
-    private Button Delete;
-    @FXML
-    private Button Edit;
+	 @FXML
+	    private ListView<String> songlist;
+
+	    @FXML
+	    private Label details;
+
+	    @FXML
+	    private Button Add;
+
+	    @FXML
+	    private Button Delete;
+
+	    @FXML
+	    private Button Edit;
+
+	    @FXML
+	    private AnchorPane hide_show;
+
+	    @FXML
+	    private TextField Song;
+
+	    @FXML
+	    private TextField Artist;
+
+	    @FXML
+	    private TextField Year;
+
+	    @FXML
+	    private TextField Album;
+
+	    @FXML
+	    private Button Ok;
+
+	    @FXML
+	    private Button Cancel;
 
 
     private ObservableList<String> obsList;
@@ -82,7 +97,7 @@ public class Controller {
 	              if(newVal.intValue() != -1){
 	            	  details.setText(fullList.get(newVal.intValue()));}});
 	              
-		 //Song.setVisible(false);
+		 hide_show.setVisible(false);
 	}
     
     
@@ -126,6 +141,7 @@ public class Controller {
 	    }
 	  
 	  public void editSong() {
+		  hide_show.setVisible(true);
 		  int index = songlist.getSelectionModel().getSelectedIndex();
 		  
 		  String tempString = fullList.get(index);
@@ -246,6 +262,7 @@ public class Controller {
     
  
     private void addSong() {
+    	 hide_show.setVisible(true);
     	 Alert alert = new Alert(AlertType.CONFIRMATION);
     	
     	 alert.setTitle("Confirmation Screen");
