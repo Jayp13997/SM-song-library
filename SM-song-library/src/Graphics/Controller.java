@@ -1,14 +1,17 @@
 package Graphics;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
-
-
+import java.util.Scanner;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,22 +71,62 @@ public class Controller {
     private ObservableList<String> fullList; 
     
    
-    public void start(Stage mainStage) {                
+    public void start(Stage mainStage) throws FileNotFoundException {                
 		// create an ObservableList 
 		// from an ArrayList  
+    	Scanner scanner = null;
+    	try {
+    		scanner = new Scanner(new File("C:\\Users\\jayp1\\git\\SM-song-library\\SM-song-library\\src\\Graphics\\Songs"));
+    	}     //                             /\ 
+ //   	                                     / 
+  //  	                                    /
+  //  	                                   / 
+  //  	                                  /
+    	
+    	//MAKE SURE TO CHANGE THIS ABSOLUTE PATH TO RELATIVE PATH
+    	
+    	catch(FileNotFoundException e) {
+            System.out.println("Couldn't find the file");   
+        }
+    	while (scanner.hasNextLine()) {
+    	   String line = scanner.nextLine();
+    	   String[] newline = line.split("_");
+    	   //System.out.println(newline[0]);
+    	   //System.out.println(newline[1]);
+    	   String song_artist = newline[0] + " \t " + newline[1];
+    	   String full_song = "";
+    	   for(int i = 0; i < newline.length; i++) {
+    		   full_song += newline[i] + " \t ";
+    	   }
+    	   full_song = full_song.substring(0, full_song.length()-3);
+    	   if (fullList == null) { 
+    		   fullList = FXCollections.observableArrayList(full_song);
+    		   obsList = FXCollections.observableArrayList(song_artist);
+    	   }
+    	   else {
+    		   fullList.addAll(FXCollections.observableArrayList(full_song));
+    		   obsList.addAll(FXCollections.observableArrayList(song_artist));
+    	   }
+    	}
+    	scanner.close();
+    	//System.out.println(fullList.toString());
+    	//System.out.println(obsList.toString());
+    	
+ /*   	
 		obsList = FXCollections.observableArrayList(                               
-				"Giants NY",                               
+				"Giants \t NY",                               
 				"Patriots \t NE",
-				"49ers \t LA ",
-				"Rams \t IDK",
-				"Packers \t GreenBay"); 
+				"49ers \t LA "
+				); 
+*/
+/*		
 		fullList = FXCollections.observableArrayList(                               
 				"Giants \t NY \t 2015 \t city",                               
 				"Patriots \t NE \t 2016 \t boston",
 				"49ers \t LA \t 2017 \t Hollywood",
 				"Rams \t IDK \t 2018 \t DOOR",
 				"Packers \t GreenBay \t 2019 \t Green"); 
-
+*/
 		Collections.sort(obsList, String.CASE_INSENSITIVE_ORDER);
     	Collections.sort(fullList, String.CASE_INSENSITIVE_ORDER);
     	
@@ -116,12 +159,13 @@ public class Controller {
 		 Artist.clear();
 		 Year.clear();
 		 Album.clear();
+		 hide_show.setVisible(false);
 		 return;
    	 	}
     }
 
     @FXML
-    void confirm(ActionEvent event) {
+    void confirm(ActionEvent event) throws IOException {
     	Button b = (Button)event.getSource();
     	 if (b == Ok && add == true){ 
     		 addSongToSongList();
@@ -155,7 +199,7 @@ public class Controller {
     }
 	
 	  @FXML
-	    void deleteSong(ActionEvent event) {
+	    void deleteSong(ActionEvent event) throws IOException {
 		  Button b = (Button)event.getSource();
 	    	 if (b == Delete) { 
 	    		
@@ -176,14 +220,43 @@ public class Controller {
 	    	 
 	   		  
 	   		  String tempString = fullList.get(index);
-	   		  String song =  tempString.substring(0 , tempString.indexOf(' '));
+	   		  String song =  tempString.substring(0 , tempString.indexOf('	'));
+	   		  song = song.strip();
 	   		  tempString = tempString.substring(song.length()).stripLeading();
-	   		  String artist = tempString.substring(0,tempString.indexOf(' '));
-	   		  tempString = tempString.substring(artist.length()).stripLeading();
-	   		  String year = tempString.substring(0,tempString.indexOf(' '));
-	   		  tempString = tempString.substring(year.length()).stripLeading();
-	   		  String album = tempString;
-	   		
+	   		  String artist = "";
+	   		  try {
+	   			  artist = tempString.substring(0,tempString.indexOf('	'));
+	   			  tempString = tempString.substring(artist.length()).stripLeading();
+	   		  }
+	   		  catch (Exception e) {
+	   			  artist = tempString;
+	   			  tempString = tempString.substring(artist.length()).stripLeading();
+	   		  }
+	   		  artist = artist.strip();
+	   		 String year = "";
+	   		  try {
+	   			  year = tempString.substring(0,tempString.indexOf('	'));
+	   			  tempString = tempString.substring(year.length()).stripLeading();
+	   		  }
+	   		  catch (Exception e) {
+	   			  year = tempString;
+	   			tempString = tempString.substring(year.length()).stripLeading();
+	   		  }
+	   		  year = year.strip();
+	   		String album = "";
+	   		  try {
+	   			  album = tempString.substring(0,tempString.indexOf('	'));
+	   			  tempString = tempString.substring(album.length()).stripLeading();
+	   		  }
+	   		  catch (Exception e) {
+	   			  album = tempString;
+	   			tempString = tempString.substring(album.length()).stripLeading();
+	   		  }
+	   		  album = album.strip();
+	   		 // String year = "";//tempString.substring(0,tempString.indexOf('	'));
+	   		  //tempString = tempString.substring(year.length()).stripLeading();
+	   		 // String album = "";//tempString;
+	   	/*	
 	   		song = song.replaceAll(" ", "");
 	   		artist = artist.replaceAll(" ", "");
 	   		year = year.replaceAll(" ", "");
@@ -192,6 +265,7 @@ public class Controller {
 	   		artist = artist.replaceAll("\t", "");
 	   		year = year.replaceAll("\t", "");
 	   		album = album.replaceAll("\t", "");
+	   		*/
 	   		  Song.setText(song);
 	   		  Artist.setText(artist);
 	   		  Year.setText(year);
@@ -212,7 +286,7 @@ public class Controller {
 	    	 }
 	    }
 	  
-	  public void  editSongtoSongList(){
+	  public void  editSongtoSongList() throws IOException{
 		  int index = songlist.getSelectionModel().getSelectedIndex();
 		    String song = Song.getText();
 	    	String artist = Artist.getText();
@@ -249,6 +323,56 @@ public class Controller {
 	    	 }
 	    	
 	    	
+	    	
+	    	
+	    	//System.out.println("DELETE THIS: " + fullList.get(index).toString());
+    		String test = fullList.get(index).toString().replaceAll(" 	 ", "_");
+    		
+    		while(test.charAt(test.length()-1) == '_') {
+        		test = test.substring(0, test.length()-2);
+        	}
+    		
+    		
+    		//System.out.println("TEST IS: " +test);
+    		
+    	
+    		String filename = "C:\\Users\\jayp1\\git\\SM-song-library\\SM-song-library\\src\\Graphics\\Songs";
+    		File songFile = new File(filename);
+    		BufferedReader reader = new BufferedReader(new FileReader(songFile));
+    	
+    		String file = "";
+    		String line = "";
+    		line = reader.readLine();
+    		while(line != null) {
+    			//System.out.println("LINE IS: " + line);
+    		    // trim newline when comparing with lineToRemove
+    		    String newline = line.trim();
+    		    if(newline.equals(test) == false) {
+    		    	//System.out.println("LINE IS: " + newline);
+    		    	file = file + newline + "\n";
+    		    }
+    		    line = reader.readLine();
+    		}
+    		file += song + "_" + artist + "_" + year + "_" + album;
+    		while(file.charAt(file.length()-1) == '_') {
+        		file = file.substring(0, file.length()-1);
+        	}
+    		//System.out.println("FILE IS: " + file);
+    		//writer.close(); 
+    		reader.close(); 
+    		//boolean successful = tempFile.renameTo(songFile);
+    		new FileWriter(filename, false).close();
+    		
+    		file = file.trim();
+    		BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true)); //Set true for append mode
+
+    		writer.write(file);
+    		writer.close();
+    		
+    		
+	    	
+	    	
+	    	
 	    	obsList.remove(index);	
 	    	obsList.add(song + " \t " + artist);
 	    	fullList.remove(index);
@@ -267,7 +391,7 @@ public class Controller {
 	  }
 	  
 	  
-	  public void deleteSong() {
+	  public void deleteSong() throws IOException {
 		  if(obsList.size() == 0) {
 			  Alert alert = new Alert(AlertType.ERROR);
 		    	
@@ -296,9 +420,51 @@ public class Controller {
 	    	if(result.get() == ButtonType.OK) {
 	    		
 	    		
+	    		
+	    		
+	    		
+	    		//System.out.println("DELETE THIS: " + fullList.get(index).toString());
+	    		String test = fullList.get(index).toString().replaceAll(" 	 ", "_");
+	    		while(test.charAt(test.length()-1) == '_') {
+	        		test = test.substring(0, test.length()-2);
+	        	}
+	    		//System.out.println("TEST IS: " +test);
+	    	
+	    		String filename = "C:\\Users\\jayp1\\git\\SM-song-library\\SM-song-library\\src\\Graphics\\Songs";
+	    		File songFile = new File(filename);
+	    		BufferedReader reader = new BufferedReader(new FileReader(songFile));
+	    	
+	    		String file = "";
+	    		String line = "";
+	    		line = reader.readLine();
+	    		while(line != null) {
+	    			//System.out.println("LINE IS: " + line);
+	    		    // trim newline when comparing with lineToRemove
+	    		    String newline = line.trim();
+	    		    if(newline.equals(test) == false) {
+	    		    	//System.out.println("LINE IS: " + newline);
+	    		    	file = file + newline + "\n";
+	    		    }
+	    		    line = reader.readLine();
+	    		}
+	    		//System.out.println("FILE IS: " + file);
+	    		//writer.close(); 
+	    		reader.close(); 
+	    		//boolean successful = tempFile.renameTo(songFile);
+	    		new FileWriter(filename, false).close();
+	    		file = file.trim();
+	    		BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true)); //Set true for append mode
+   
+	    		writer.write(file);
+	    		writer.close();
+	    		
+	    		
 	        	   
 	        	   obsList.remove(index);
 	        	   fullList.remove(index);
+	        	   
+	        	   
+	        	
 	        	   //details.setText("");
 	        	  songlist.getSelectionModel().select(-1);
 	        	   if(obsList.size() == 0){
@@ -317,14 +483,14 @@ public class Controller {
 	    		return;
 	    	}
 	              
-		
+		return;
 		  
 	  }
 	  
 	 
 
     
-    public void addSongToSongList() {
+    public void addSongToSongList() throws IOException {
     	String song = Song.getText();
     	String artist = Artist.getText();
     	String year = Year.getText();
@@ -341,8 +507,8 @@ public class Controller {
     	}
     	
     	for(int i = 0; i < obsList.size(); i++) {
-   		 String temp = obsList.get(i).replaceAll(" ", "");
-   		 temp = temp.replaceAll("\t", "");
+   		 String temp = obsList.get(i).replaceAll(" 	 ", "");
+   		// temp = temp.replaceAll("\t", "");
    	 
 			 if(temp.equalsIgnoreCase(song + artist)) {
 
@@ -360,7 +526,21 @@ public class Controller {
     	obsList.add(song + " \t " + artist);
     	fullList.add(song + " \t " + artist + " \t " + year + " \t " + album);
     	
-    	 
+    	
+    	String addSong = song + "_" + artist + "_" + year + "_" + album;
+    	
+    	while(addSong.charAt(addSong.length()-1) == '_') {
+    		addSong = addSong.substring(0, addSong.length()-2);
+    	}
+    	String filename = "C:\\Users\\jayp1\\git\\SM-song-library\\SM-song-library\\src\\Graphics\\Songs";
+		
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));  //Set true for append mode
+  
+        writer.newLine();   //Add new line
+        writer.write(addSong);
+        writer.close();
+    	
+    	
     	obsList.sort(String.CASE_INSENSITIVE_ORDER);
     	fullList.sort(String.CASE_INSENSITIVE_ORDER);
     	
@@ -369,7 +549,7 @@ public class Controller {
     	
     	songlist.getSelectionModel().select(index);
     	
-    	
+    	return;
     }
     
     
