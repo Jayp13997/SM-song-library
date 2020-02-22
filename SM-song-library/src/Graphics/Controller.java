@@ -186,8 +186,11 @@ public class Controller {
      		hide_show.setVisible(false);
      		add = false;
      		
-     			Edit.setVisible(true);
-     			Delete.setVisible(true);
+     		File newFile = new File("./src/Graphics/Songs");
+   		 if(newFile.length() != 0){
+   		 Edit.setVisible(true);
+   		 Delete.setVisible(true);
+   		 }
      		
     	 }else if(b == Ok && edit == true) {
     		 editSongtoSongList();
@@ -307,6 +310,7 @@ public class Controller {
 	    	String year = Year.getText();
 	    	String album = Album.getText();
 	    	
+	    	
 	    	if(song.isBlank() || artist.isBlank()) {
 	    		 Alert alert = new Alert(AlertType.ERROR);
 	 	    	
@@ -392,6 +396,8 @@ public class Controller {
 	    	fullList.remove(index);
 	    	fullList.add(song + " \t " + artist + " \t " + year + " \t " + album);
 	    	
+	    	
+	    	
 	    	 
 	    	obsList.sort(String.CASE_INSENSITIVE_ORDER);
 	    	fullList.sort(String.CASE_INSENSITIVE_ORDER);
@@ -442,7 +448,7 @@ public class Controller {
 	    		String test = fullList.get(index).toString().replaceAll(" 	 ", "_");
 	    		
 	    		while(test.charAt(test.length()-1) == '_') {
-	        		test = test.substring(0, test.length()-2);
+	        		test = test.substring(0, test.length()-1);
 	        	}
 	    		//System.out.println("TEST IS: " +test);
 	    	
