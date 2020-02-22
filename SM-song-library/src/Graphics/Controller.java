@@ -75,6 +75,7 @@ public class Controller {
 	    private Button Cancel;
 	    boolean add = false;
 	    boolean edit = false;
+	    boolean delete = false;
 
 
     private ObservableList<String> obsList = null;
@@ -163,6 +164,12 @@ public class Controller {
 		 Year.clear();
 		 Album.clear();
 		 hide_show.setVisible(false);
+		 File newFile = new File("./src/Graphics/Songs");
+		 if(newFile.length() != 0){
+		 Edit.setVisible(true);
+		 Delete.setVisible(true);
+		 }
+		 Add.setVisible(true);
 		 return;
    	 	}
     }
@@ -178,10 +185,10 @@ public class Controller {
      		 Album.clear();
      		hide_show.setVisible(false);
      		add = false;
-     		if(fullList.size() != 0) {
+     		
      			Edit.setVisible(true);
      			Delete.setVisible(true);
-     		}
+     		
     	 }else if(b == Ok && edit == true) {
     		 editSongtoSongList();
     		 Song.clear();
@@ -190,6 +197,8 @@ public class Controller {
      		 Album.clear();
      		hide_show.setVisible(false);
      		edit = false;
+     		Add.setVisible(true);
+ 			Delete.setVisible(true);
     	 }
     }
 
@@ -200,6 +209,8 @@ public class Controller {
 
     	Button b = (Button)event.getSource();
     	 if (b == Add) { 
+    		 Edit.setVisible(false);
+         	 Delete.setVisible(false);
     		 hide_show.setVisible(true);
     		 add = true;
     	 }
@@ -213,6 +224,11 @@ public class Controller {
 	    		deleteSong();
 	    		hide_show.setVisible(false);
 	    		
+	   		 if(fullList.size() == 0){
+	   		 Edit.setVisible(false);
+	   		 Delete.setVisible(false);
+	   		 }
+	    		
 	    	 }
 	    }
 	    
@@ -222,7 +238,9 @@ public class Controller {
 		  int index = songlist.getSelectionModel().getSelectedIndex();
 		  
 		  Button b = (Button)event.getSource();
-	    	 if (b == Edit && !obsList.isEmpty()) { 
+	    	 if (b == Edit && !obsList.isEmpty()) {
+	    		 Delete.setVisible(false);
+	         	Add.setVisible(false);
 	    		hide_show.setVisible(true);
 	    		edit = true;
 	    	 
