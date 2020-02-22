@@ -88,20 +88,12 @@ public class Controller {
     	File newFile = new File("./src/Graphics/Songs");
 
         if (newFile.length() == 0) {
-        	
-        	 songlist
- 	        .getSelectionModel()
- 	        .selectedIndexProperty()
- 	        .addListener(
- 	           (obs, oldVal, newVal) -> {
- 	              if(newVal.intValue() != -1){
- 	            	  details.setText(fullList.get(newVal.intValue()));}});
 
         	hide_show.setVisible(false);
         	Edit.setVisible(false);
         	Delete.setVisible(false);
         }
-        else {
+        else{
     	
     	Scanner scanner = null;
     	try {
@@ -143,17 +135,19 @@ public class Controller {
 		songlist.getSelectionModel().select(0);
 		details.setText(fullList.get(0));
 	    
-		 songlist
-	        .getSelectionModel()
-	        .selectedIndexProperty()
-	        .addListener(
-	           (obs, oldVal, newVal) -> {
-	              if(newVal.intValue() != -1){
-	            	  details.setText(fullList.get(newVal.intValue()));}});
+		
 	              
 		 hide_show.setVisible(false);
 		 
         }	
+        
+        songlist
+        .getSelectionModel()
+        .selectedIndexProperty()
+        .addListener(
+           (obs, oldVal, newVal) -> {
+              if(newVal.intValue() != -1){
+            	  details.setText(fullList.get(newVal.intValue()));}});
 	}
     
     
@@ -184,7 +178,7 @@ public class Controller {
      		 Album.clear();
      		hide_show.setVisible(false);
      		add = false;
-     		if(fullList != null) {
+     		if(fullList.size() != 0) {
      			Edit.setVisible(true);
      			Delete.setVisible(true);
      		}
@@ -267,19 +261,7 @@ public class Controller {
 	   			tempString = tempString.substring(album.length()).stripLeading();
 	   		  }
 	   		  album = album.strip();
-	   		 // String year = "";//tempString.substring(0,tempString.indexOf('	'));
-	   		  //tempString = tempString.substring(year.length()).stripLeading();
-	   		 // String album = "";//tempString;
-	   	/*	
-	   		song = song.replaceAll(" ", "");
-	   		artist = artist.replaceAll(" ", "");
-	   		year = year.replaceAll(" ", "");
-	   		album = album.replaceAll(" ", "");
-	   		song = song.replaceAll("\t", "");
-	   		artist = artist.replaceAll("\t", "");
-	   		year = year.replaceAll("\t", "");
-	   		album = album.replaceAll("\t", "");
-	   		*/
+	   		
 	   		  Song.setText(song);
 	   		  Artist.setText(artist);
 	   		  Year.setText(year);
@@ -551,8 +533,8 @@ public class Controller {
    		   obsList = FXCollections.observableArrayList(song + " \t " + artist);
    	   	}
    	   	else {
-   		   fullList.addAll(FXCollections.observableArrayList(song + " \t " + artist));
-   		   obsList.addAll(FXCollections.observableArrayList(song + " \t " + artist + " \t " + year + " \t " + album));
+   	   	obsList.addAll(FXCollections.observableArrayList(song + " \t " + artist));
+   		fullList.addAll(FXCollections.observableArrayList(song + " \t " + artist + " \t " + year + " \t " + album));
    	   	}
     //	obsList.add(song + " \t " + artist);
     //	fullList.add(song + " \t " + artist + " \t " + year + " \t " + album);
@@ -580,7 +562,6 @@ public class Controller {
              songlist.setItems(obsList);
              songlist.getSelectionModel().select(0);
      		 details.setText(fullList.get(0));
-     		 
         	
         }
         else {
@@ -597,7 +578,7 @@ public class Controller {
     	
     	int index = obsList.indexOf(song + " \t " + artist);
     	
-    	System.out.println("INDEX is " + index);
+    	//System.out.println("INDEX is " + index);
     	
     	
     	songlist.getSelectionModel().select(index);
