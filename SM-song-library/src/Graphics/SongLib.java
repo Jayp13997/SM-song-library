@@ -1,4 +1,14 @@
+/*
+ * 
+ * Jay Patel             netid: jsp202
+ * Anhad Bir Singh       netid: as2816
+ * 
+ */
+
+
+
 package Graphics;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import Graphics.Controller;
 
-public class main extends Application {
+public class SongLib extends Application {
 
 	 @Override
 	    public void start(Stage primaryStage) throws Exception{

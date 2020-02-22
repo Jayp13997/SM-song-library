@@ -1,3 +1,12 @@
+/*
+ * 
+ * Jay Patel             netid: jsp202
+ * Anhad Bir Singh       netid: as2816
+ * 
+ */
+
+
+
 package Graphics;
 
 import java.io.BufferedReader;
@@ -27,6 +36,7 @@ import javafx.stage.Stage;
 
 //song error before confirmation or after?
 public class Controller {
+	
 
 	 @FXML
 	    private ListView<String> songlist;
@@ -67,23 +77,36 @@ public class Controller {
 	    boolean edit = false;
 
 
-    private ObservableList<String> obsList;
-    private ObservableList<String> fullList; 
+    private ObservableList<String> obsList = null;
+    private ObservableList<String> fullList = null; 
     
    
     public void start(Stage mainStage) throws FileNotFoundException {                
 		// create an ObservableList 
 		// from an ArrayList  
+    	
+    	File newFile = new File("./src/Graphics/Songs");
+
+        if (newFile.length() == 0) {
+        	
+        	 songlist
+ 	        .getSelectionModel()
+ 	        .selectedIndexProperty()
+ 	        .addListener(
+ 	           (obs, oldVal, newVal) -> {
+ 	              if(newVal.intValue() != -1){
+ 	            	  details.setText(fullList.get(newVal.intValue()));}});
+
+        	hide_show.setVisible(false);
+        	Edit.setVisible(false);
+        	Delete.setVisible(false);
+        }
+        else {
+    	
     	Scanner scanner = null;
     	try {
-    		scanner = new Scanner(new File("C:\\Users\\jayp1\\git\\SM-song-library\\SM-song-library\\src\\Graphics\\Songs"));
-    	}     //                             /\ 
- //   	                                     / 
-  //  	                                    /
-  //  	                                   / 
-  //  	                                  /
-    	
-    	//MAKE SURE TO CHANGE THIS ABSOLUTE PATH TO RELATIVE PATH
+    		scanner = new Scanner(new File("./src/Graphics/Songs"));
+    	} 
     	
     	catch(FileNotFoundException e) {
             System.out.println("Couldn't find the file");   
@@ -111,22 +134,8 @@ public class Controller {
     	scanner.close();
     	//System.out.println(fullList.toString());
     	//System.out.println(obsList.toString());
-    	
- /*   	
-		obsList = FXCollections.observableArrayList(                               
-				"Giants \t NY",                               
-				"Patriots \t NE",
-				"49ers \t LA "
-				); 
-*/
-/*		
-		fullList = FXCollections.observableArrayList(                               
-				"Giants \t NY \t 2015 \t city",                               
-				"Patriots \t NE \t 2016 \t boston",
-				"49ers \t LA \t 2017 \t Hollywood",
-				"Rams \t IDK \t 2018 \t DOOR",
-				"Packers \t GreenBay \t 2019 \t Green"); 
-*/
+    	         
+        
 		Collections.sort(obsList, String.CASE_INSENSITIVE_ORDER);
     	Collections.sort(fullList, String.CASE_INSENSITIVE_ORDER);
     	
@@ -144,7 +153,7 @@ public class Controller {
 	              
 		 hide_show.setVisible(false);
 		 
-		
+        }	
 	}
     
     
@@ -175,6 +184,10 @@ public class Controller {
      		 Album.clear();
      		hide_show.setVisible(false);
      		add = false;
+     		if(fullList != null) {
+     			Edit.setVisible(true);
+     			Delete.setVisible(true);
+     		}
     	 }else if(b == Ok && edit == true) {
     		 editSongtoSongList();
     		 Song.clear();
@@ -204,6 +217,7 @@ public class Controller {
 	    	 if (b == Delete) { 
 	    		
 	    		deleteSong();
+	    		hide_show.setVisible(false);
 	    		
 	    	 }
 	    }
@@ -327,16 +341,16 @@ public class Controller {
 	    	
 	    	//System.out.println("DELETE THIS: " + fullList.get(index).toString());
     		String test = fullList.get(index).toString().replaceAll(" 	 ", "_");
-    		
+    		//System.out.println(test);
     		while(test.charAt(test.length()-1) == '_') {
-        		test = test.substring(0, test.length()-2);
+        		test = test.substring(0, test.length()-1);
         	}
     		
     		
-    		//System.out.println("TEST IS: " +test);
+    	//	System.out.println("TEST IS: " +test);
     		
     	
-    		String filename = "C:\\Users\\jayp1\\git\\SM-song-library\\SM-song-library\\src\\Graphics\\Songs";
+    		String filename = "./src/Graphics/Songs";
     		File songFile = new File(filename);
     		BufferedReader reader = new BufferedReader(new FileReader(songFile));
     	
@@ -357,7 +371,7 @@ public class Controller {
     		while(file.charAt(file.length()-1) == '_') {
         		file = file.substring(0, file.length()-1);
         	}
-    		//System.out.println("FILE IS: " + file);
+    		System.out.println("FILE IS: " + file);
     		//writer.close(); 
     		reader.close(); 
     		//boolean successful = tempFile.renameTo(songFile);
@@ -405,6 +419,7 @@ public class Controller {
 			  return;//nothing to delete throw error?
 		  }
 		 int index = songlist.getSelectionModel().getSelectedIndex();
+		// System.out.println("Index is: " + index);
 		  
 		  Alert alert = new Alert(AlertType.CONFIRMATION);
 	    	
@@ -425,12 +440,13 @@ public class Controller {
 	    		
 	    		//System.out.println("DELETE THIS: " + fullList.get(index).toString());
 	    		String test = fullList.get(index).toString().replaceAll(" 	 ", "_");
+	    		
 	    		while(test.charAt(test.length()-1) == '_') {
 	        		test = test.substring(0, test.length()-2);
 	        	}
 	    		//System.out.println("TEST IS: " +test);
 	    	
-	    		String filename = "C:\\Users\\jayp1\\git\\SM-song-library\\SM-song-library\\src\\Graphics\\Songs";
+	    		String filename = "./src/Graphics/Songs";
 	    		File songFile = new File(filename);
 	    		BufferedReader reader = new BufferedReader(new FileReader(songFile));
 	    	
@@ -463,7 +479,7 @@ public class Controller {
 	        	   obsList.remove(index);
 	        	   fullList.remove(index);
 	        	   
-	        	   
+	        	   System.out.println("INDEX in delete is: "+ index);
 	        	
 	        	   //details.setText("");
 	        	  songlist.getSelectionModel().select(-1);
@@ -506,45 +522,82 @@ public class Controller {
 	    	return;
     	}
     	
-    	for(int i = 0; i < obsList.size(); i++) {
-   		 String temp = obsList.get(i).replaceAll(" 	 ", "");
-   		// temp = temp.replaceAll("\t", "");
+    	
+    	
+    	
+    	if(obsList != null) {
+    		for(int i = 0; i < obsList.size(); i++) {
+    			String temp = obsList.get(i).replaceAll(" 	 ", "");
+    			// temp = temp.replaceAll("\t", "");
    	 
-			 if(temp.equalsIgnoreCase(song + artist)) {
+    			if(temp.equalsIgnoreCase(song + artist)) {
 
    		
-   	Alert alert = new Alert(AlertType.ERROR);
+    				Alert alert = new Alert(AlertType.ERROR);
        	
-      	 alert.setTitle("Error Message");
-      	 alert.setHeaderText(
-      	 "This song and artist already exist in the library");
-      	 alert.showAndWait();
-      	 return;
-   	}
-   	 }
+    				alert.setTitle("Error Message");
+    				alert.setHeaderText(
+      			 "This song and artist already exist in the library");
+    				alert.showAndWait();
+    				return;
+    			}
+    		}
+    	}
     	
-    	obsList.add(song + " \t " + artist);
-    	fullList.add(song + " \t " + artist + " \t " + year + " \t " + album);
     	
+    	
+    	if (fullList == null && obsList == null) { 
+   		   fullList = FXCollections.observableArrayList(song + " \t " + artist + " \t " + year + " \t " + album);
+   		   obsList = FXCollections.observableArrayList(song + " \t " + artist);
+   	   	}
+   	   	else {
+   		   fullList.addAll(FXCollections.observableArrayList(song + " \t " + artist));
+   		   obsList.addAll(FXCollections.observableArrayList(song + " \t " + artist + " \t " + year + " \t " + album));
+   	   	}
+    //	obsList.add(song + " \t " + artist);
+    //	fullList.add(song + " \t " + artist + " \t " + year + " \t " + album);
+    	//System.out.println("Full List: " + fullList.toString());
+    	//System.out.println("obs List:" + obsList.toString());
     	
     	String addSong = song + "_" + artist + "_" + year + "_" + album;
     	
     	while(addSong.charAt(addSong.length()-1) == '_') {
-    		addSong = addSong.substring(0, addSong.length()-2);
+    		addSong = addSong.substring(0, addSong.length()-1);
     	}
-    	String filename = "C:\\Users\\jayp1\\git\\SM-song-library\\SM-song-library\\src\\Graphics\\Songs";
+    	String filename = "./src/Graphics/Songs";
 		
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));  //Set true for append mode
-  
-        writer.newLine();   //Add new line
-        writer.write(addSong);
-        writer.close();
     	
+    	File newFile = new File(filename);
+
+        if (newFile.length() == 0) {
+        	
+        	BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));  //Set true for append mode
+            
+            
+            // writer.newLine();   //Add new line
+             writer.write(addSong);
+             writer.close();
+             songlist.setItems(obsList);
+             songlist.getSelectionModel().select(0);
+     		 details.setText(fullList.get(0));
+     		 
+        	
+        }
+        else {
+        	BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));  //Set true for append mode
+        
+        
+        	writer.newLine();   //Add new line
+        	writer.write(addSong);
+        	writer.close();
     	
+        }
     	obsList.sort(String.CASE_INSENSITIVE_ORDER);
     	fullList.sort(String.CASE_INSENSITIVE_ORDER);
     	
     	int index = obsList.indexOf(song + " \t " + artist);
+    	
+    	System.out.println("INDEX is " + index);
     	
     	
     	songlist.getSelectionModel().select(index);
